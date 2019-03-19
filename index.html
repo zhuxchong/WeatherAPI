@@ -1,0 +1,364 @@
+<html>
+  <!-- luke ZHU 
+    mail:lukezhu1993@gmail.com
+    -->
+  <header>
+    <link rel='icon' href='./images/sunny.ico' type=‘image/x-ico’ />
+  </header>
+  <link href="reset.css" rel="stylesheet" type="text/css" />
+  <link href="main.css" rel="stylesheet" type="text/css" />
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript" src="index.js"></script>
+  <body onload="result();">
+    <div id="mainComponent">
+      <div class="currentContent">
+        <div id="leftArrow" onclick="leftCity();">
+          <img src="./images/leftArrow.png" alt="rain" class="Arrow" style="
+cursor:pointer;"/>
+        </div>
+        <div id="currentMain">
+          <div id="currentCity"><h1 id="city"></h1></div>
+          <div id="currentWeather">
+            <div class="weatherInt"></div>
+            <img
+              src="./images/loading.svg"
+              alt="rain"
+              class="currentWeatherPict"
+            />
+            <div class="weatherInt"></div>
+          </div>
+          <div id="currentTemp"><h1 class="temp"></h1></div>
+          <div id="todayTemp"><h1 class="rangeCondition"></h1></div>
+          <div id="todayCondition"><h1 class="rangeCondition"></h1></div>
+        </div>
+        <div id="rightArrow" onclick="rightCity()">
+          <img src="./images/rightArrow.png" alt="rain" class="Arrow" style="
+cursor:pointer;"/>
+        </div>
+      </div>
+      <div class="forecastContent">
+        <div class="interval"></div>
+        <div id="day1" class="bottomForest">
+          <h1 class="forecastDate"></h1>
+          <img src="./images/loading.svg" alt="rain" class="forecastIcon" />
+          <h1 class="detailedTemp"></h1>
+        </div>
+        <div id="day2" class="bottomForest">
+          <h1 class="forecastDate"></h1>
+          <img src="./images/loading.svg" alt="rain" class="forecastIcon" />
+          <h1 class="detailedTemp"></h1>
+        </div>
+        <div id="day3" class="bottomForest">
+          <h1 class="forecastDate"></h1>
+          <img src="./images/loading.svg" alt="rain" class="forecastIcon" />
+          <h1 class="detailedTemp"></h1>
+        </div>
+        <div id="day4" class="bottomForest">
+          <h1 class="forecastDate"></h1>
+          <img src="./images/loading.svg" alt="rain" class="forecastIcon" />
+          <h1 class="detailedTemp"></h1>
+        </div>
+        <div id="day5" class="bottomForest">
+          <h1 class="forecastDate"></h1>
+          <img src="./images/loading.svg" alt="rain" class="forecastIcon" />
+          <h1 class="detailedTemp"></h1>
+        </div>
+        <div class="interval"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let changeCss = () => {
+      //change elements css to adjust the device whose screen width < 1025 like : Ipad and phone.
+      if (window.innerWidth < 1025) {
+        document.getElementById("mainComponent").style.width = "100%";
+        document.getElementById("leftArrow").style.flex = "2";
+        document.getElementById("rightArrow").style.flex = "2";
+        document.getElementById("currentMain").style.flex = "5";
+        document.getElementsByClassName("currentContent")[0].style.height =
+          "60%";
+        document.getElementsByClassName("forecastContent")[0].style.height =
+          "40%";
+        document.getElementsByClassName("Arrow")[0].style.width = "50%";
+        document.getElementsByClassName("Arrow")[1].style.width = "50%";
+        document.getElementsByClassName("currentWeatherPict")[0].style.width =
+          "120%";
+        document.getElementsByClassName("currentWeatherPict")[0].style.height =
+          "150%";
+        document.getElementsByClassName("weatherInt")[0].style.flex = "0";
+        document.getElementsByClassName("weatherInt")[1].style.flex = "0";
+        document.getElementsByClassName("temp")[0].style.fontSize = "100px";
+        document.getElementsByClassName("rangeCondition")[0].style.fontSize =
+          "70px";
+        document.getElementsByClassName("rangeCondition")[1].style.fontSize =
+          "70px";
+        document.getElementById("city").style.fontSize = "100px";
+        //bottomForest
+        document.getElementsByClassName("interval")[0].style.display = "none";
+        document.getElementsByClassName("interval")[1].style.display = "none";
+        // let ele=document.createElement('div');
+        // ele.style.height='50%';
+        // ele.style.width='100%';
+        // ele.className='bottomContainer1';
+        let con = document.getElementsByClassName("forecastContent")[0];
+        // con.appendChild(ele);
+        // let ele1=document.createElement('div');
+        // ele1.style.height='50%';
+        // ele1.style.width='100%';
+        // ele1.className='bottomContainer1';
+        // con.appendChild(ele1);
+        con.innerHTML =
+          '<div class="bottomContainer1" style="height: 50%; width: 100%;display: flex;justify-content:center">' +
+          '       <div id="day1" class="bottomForest">\n' +
+          '            <h1 class="forecastDate"></h1>\n' +
+          '            <img src="./images/loading.svg" alt="rain" class="forecastIcon">\n' +
+          '            <h1 class="detailedTemp"></h1>\n' +
+          "        </div>" +
+          '<div id="day2" class="bottomForest">\n' +
+          '            <h1 class="forecastDate">2019-03-05</h1>\n' +
+          '            <img src="./images/loading.svg" alt="rain" class="forecastIcon">\n' +
+          '            <h1 class="detailedTemp">15.1/24.2</h1>\n' +
+          "        </div>" +
+          '<div id="day3" class="bottomForest">\n' +
+          '            <h1 class="forecastDate">2019-03-06</h1>\n' +
+          '            <img src="./images/loading.svg" alt="rain" class="forecastIcon">\n' +
+          '            <h1 class="detailedTemp">-0.2/13.7</h1>\n' +
+          "        </div>" +
+          "</div>" +
+          '<div class="bottomContainer1" style="height: 50%; width: 100%;display: flex;justify-content:center">' +
+          '<div id="day4" class="bottomForest">\n' +
+          '            <h1 class="forecastDate">2019-03-07</h1>\n' +
+          '            <img src="./images/loading.svg" alt="rain" class="forecastIcon">\n' +
+          '            <h1 class="detailedTemp">-1.4/17.2</h1>\n' +
+          "        </div>" +
+          '<div style="flex:4;"></div>' +
+          '<div id="day5" class="bottomForest">\n' +
+          '            <h1 class="forecastDate">2019-03-08</h1>\n' +
+          '            <img src="./images/loading.svg" alt="rain" class="forecastIcon">\n' +
+          '            <h1 class="detailedTemp">3.2/21.1</h1>\n' +
+          "        </div>" +
+          "</div>";
+        Array.prototype.map.call(
+          document.getElementsByClassName("bottomForest"),
+          (item, index) => {
+            item.getElementsByClassName("forecastDate")[0].style.fontSize =
+              "30px";
+            item.getElementsByClassName("detailedTemp")[0].style.fontSize =
+              "30px";
+            item.getElementsByClassName("forecastIcon")[0].style.flex = "7";
+            item.getElementsByClassName("forecastIcon")[0].style.height = "20%";
+            item.getElementsByClassName("forecastIcon")[0].style.width = "60%";
+          }
+        );
+      }
+    };
+    let point = 1; //a pointer to determine which city's data should be displayed
+    let mapTemperature = {
+      // object used to store the response from api
+      Syd: { recordTemp: [] },
+      Mel: { recordTemp: [] },
+      Bris: { recordTemp: [] },
+      snowy: { recordTemp: [] }
+    };
+    let result = () => {
+      //get 4 cities  data in advance , due to this API is from UK, quite slow to get data, actually I can make the code clearer
+      //but I only have limited time to finish that assignment.
+      $.ajax({
+        async: false,
+        url:
+          "http://api.apixu.com/v1/forecast.json?key=b35221898d3a492da3983251192102&q=Sydney&days=6",
+        success: function(res) {
+          mapTemperature.Syd.currentTemp = res.current.temp_c;
+          mapTemperature.Syd.currentCondition = res.current.condition.code;
+          res.forecast.forecastday.map((item, index) => {
+            mapTemperature.Syd.recordTemp.push({
+              date: item.date,
+              maxTemp: item.day.maxtemp_c,
+              minTemp: item.day.mintemp_c,
+              condition: item.day.condition.code
+            });
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        } //network error
+      });
+      $.ajax({
+        url:
+          "http://api.apixu.com/v1/forecast.json?key=b35221898d3a492da3983251192102&q=Brisbane&days=6",
+        success: function(res) {
+          mapTemperature.Bris.currentTemp = res.current.temp_c;
+          mapTemperature.Bris.currentCondition = res.current.condition.code;
+          res.forecast.forecastday.map((item, index) => {
+            mapTemperature.Bris.recordTemp.push({
+              date: item.date,
+              maxTemp: item.day.maxtemp_c,
+              minTemp: item.day.mintemp_c,
+              condition: item.day.condition.code
+            });
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        } //network error
+      });
+      $.ajax({
+        url:
+          "http://api.apixu.com/v1/forecast.json?key=b35221898d3a492da3983251192102&q=Melbourne&days=6",
+        success: function(res) {
+          mapTemperature.Mel.currentTemp = res.current.temp_c;
+          mapTemperature.Mel.currentCondition = res.current.condition.code;
+          res.forecast.forecastday.map((item, index) => {
+            mapTemperature.Mel.recordTemp.push({
+              date: item.date,
+              maxTemp: item.day.maxtemp_c,
+              minTemp: item.day.mintemp_c,
+              condition: item.day.condition.code
+            });
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        } //network error
+      });
+      $.ajax({
+        url:
+          "http://api.apixu.com/v1/forecast.json?key=b35221898d3a492da3983251192102&q=-36.5000,148.3333&days=6",
+        success: function(res) {
+          mapTemperature.snowy.currentTemp = res.current.temp_c;
+          mapTemperature.snowy.currentCondition = res.current.condition.code;
+          res.forecast.forecastday.map((item, index) => {
+            mapTemperature.snowy.recordTemp.push({
+              date: item.date,
+              maxTemp: item.day.maxtemp_c,
+              minTemp: item.day.mintemp_c,
+              condition: item.day.condition.code
+            });
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        } //network error
+      });
+      console.log(mapTemperature);
+      changeCss();
+      changeData(point, mapTemperature);
+    };
+    changeData = (point, mapTemperature) => {
+      //change data when client click the arrow
+      let city = "";
+      if (point === 1) {
+        document.getElementById("city").innerText = "Sydney";
+        city = mapTemperature.Syd;
+      } else if (point === 2) {
+        document.getElementById("city").innerText = "Melbourne";
+        city = mapTemperature.Mel;
+      } else if (point === 3) {
+        document.getElementById("city").innerText = "Brisbane";
+        city = mapTemperature.Bris;
+      } else if (point === 4) {
+        document.getElementById("city").innerText = "Mountain";
+        city = mapTemperature.snowy;
+      }
+
+      let pict = getWeatherIcon(city.currentCondition);
+      document.getElementsByClassName("currentWeatherPict")[0].src =
+        "./images/" + pict;
+      document.getElementsByClassName("temp")[0].innerHTML =
+        city.currentTemp + "&#8451;";
+      document.getElementsByClassName("rangeCondition")[0].innerHTML =
+        city.recordTemp[0].minTemp +
+        "&#176; &nbsp;~ &nbsp;" +
+              city.recordTemp[0].maxTemp +
+        "&#176;";
+      document.getElementsByClassName(
+        "rangeCondition"
+      )[1].innerHTML = pict.slice(0, -4);
+      city.recordTemp.map((item, index) => {
+        if (index >= 1) {
+          let day = "day" + index;
+          document
+            .getElementById(day)
+            .getElementsByClassName("forecastDate")[0].innerHTML = item.date;
+          let icon = getWeatherIcon(item.condition);
+          document
+            .getElementById(day)
+            .getElementsByClassName("forecastIcon")[0].src = "./images/" + icon;
+          document
+            .getElementById(day)
+            .getElementsByClassName("detailedTemp")[0].innerHTML =
+            item.minTemp + "/" + item.maxTemp;
+        }
+      });
+    };
+    leftCity = () => {
+      if (point === 1) {
+        point = 4;
+        changeData(point, mapTemperature);
+      } else {
+        point -= 1;
+        changeData(point, mapTemperature);
+      }
+    };
+    rightCity = () => {
+      if (point === 4) {
+        point = 1;
+        changeData(point, mapTemperature);
+      } else {
+        point += 1;
+        changeData(point, mapTemperature);
+      }
+    };
+    getWeatherIcon = c => {
+      //c means weather condition, code received from api response
+
+      if (c === 1000) {
+        let con = "sunny.svg";
+        return con;
+      } else if (
+        c === 1003 ||
+        c === 1006 ||
+        c === 1009 ||
+        c === 1030 ||
+        c === 1135 ||
+        c === 1147 ||
+        c === 1150 ||
+        c === 1153 ||
+        c === 1168
+      ) {
+        let con = "cloudy.svg";
+        return con;
+      } else if (
+        c === 1066 ||
+        c === 1069 ||
+        c === 1072 ||
+        c === 1114 ||
+        c === 1117 ||
+        c === 1210 ||
+        c === 1213 ||
+        c === 1216 ||
+        c === 1219 ||
+        c === 1222 ||
+        c === 1225 ||
+        c === 1237 ||
+        c === 1279 ||
+        c === 1282
+      ) {
+        let con = "snow.svg";
+        return con;
+      } else if (c === 1087 || c === 1273 || c === 1276) {
+        let con = "thunderStorm.svg";
+        return con;
+      } else {
+        let con = "rain.svg";
+        return con;
+      }
+    };
+    //console.log(getWeatherIcon(1006));
+  </script>
+</html>
